@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+<h1>Admin Dashboard</h1>
+<!-- Add this where appropriate in your admin dashboard -->
+<a href="{{ url_for('admin_access_codes') }}" class="btn btn-info mt-3">View Access Codes</a>
+
+<br>
+<!-- Add this where appropriate in your admin dashboard -->
+<a href="{{ url_for('admin_read_file') }}" class="btn btn-warning mt-3">Read File</a>
+<br>
+{% if voting_active %}
+<p>Voting is active for {{ current_person }}.</p>
+<form method="post">
+    <input type="hidden" name="action" value="stop">
+    <button type="submit">Stop Voting</button>
+</form>
+{% else %}
+<p>Voting is inactive.</p>
+<form method="post">
+    <label>Person to Vote For:</label>
+    <input type="text" name="person" required>
+    <input type="hidden" name="action" value="start">
+    <button type="submit">Start Voting</button>
+</form>
+{% endif %}
+<!-- Add the refresh access codes button -->
+<form method="post" onsubmit="return confirmRefresh();">
+    <input type="hidden" name="action" value="refresh_codes">
+    <button type="submit" class="btn btn-warning mt-3">Refresh Access Codes</button>
+</form>
+
+{% if message %}
+<div class="alert alert-info mt-3">{{ message }}</div>
+{% endif %}
+
+<a href="{{ url_for('admin_logout') }}" class="btn btn-secondary mt-3">Logout</a>
+
+<script>
+    function confirmRefresh() {
+        return confirm('Are you sure you want to refresh the access codes? This will invalidate all existing codes.');
+    }
+</script>
+</body>
+</html>

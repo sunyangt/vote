@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Voting Results</title>
+</head>
+<body>
+    <h1>Voting Results</h1>
+    {% if all_votes %}
+        <ul>
+            {% for name, data in all_votes.items() %}
+                <li>
+                    <strong>{{ name }}</strong><br>
+                    Likes: {{ data['like'] }}<br>
+                    Dislikes: {{ data['dislike'] }}<br>
+                    Percentage: {{ (data['percentage'] * 100) | round(2) }}%
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No voting data available.</p>
+    {% endif %}
+</body>
+</html>

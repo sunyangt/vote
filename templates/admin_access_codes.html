@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Access Codes</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Optional: Include the jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body class="container">
+    <h1 class="my-4 text-center">Access Codes</h1>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Access Code</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for code, info in access_codes.items() %}
+            <tr>
+                <td>{{ code }}</td>
+                <td>
+                    {% if info['used'] %}
+                        <span class="text-danger">Used</span>
+                    {% else %}
+                        <span class="text-success">Unused</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-primary mt-3">Back to Dashboard</a>
+</body>
+</html>

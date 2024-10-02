@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Content</title>
+    <!-- Include Bootstrap CSS and JS -->
+    <!-- ... same as other templates ... -->
+    <style>
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border: 1px solid #dee2e6;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body class="container">
+    <h1 class="my-4 text-center">Content of {{ filename }}</h1>
+    <pre>{{ content }}</pre>
+    <a href="{{ url_for('admin_read_file') }}" class="btn btn-primary mt-3">Read Another File</a>
+    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary mt-3">Back to Dashboard</a>
+</body>
+</html>

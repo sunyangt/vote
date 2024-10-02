@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>给 {{ person }} 投票</title>
+    <!-- Meta viewport tag for mobile devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <!-- Optional: Include the jQuery library (required for Bootstrap JS plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background */
+            color: #212529; /* Dark text for readability */
+            font-size: 1rem;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            font-size: 1.8rem;
+            margin-top: 20px;
+        }
+        #vote-buttons {
+            margin-top: 30px;
+        }
+        .btn {
+            font-size: 1.25rem;
+            padding: 15px 0;
+        }
+        #loader, #message {
+            display: none;
+            margin-top: 20px;
+        }
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+    </style>
+    <script>
+        function sendVote(voteType) {
+            // Disable buttons and show loader
+            document.getElementById('vote-buttons').style.display = 'none';
+            document.getElementById('loader').style.display = 'block';
+
+            $.ajax({
+                url: '/vote',
+                type: 'POST',
+                data: {
+                    vote_type: voteType
+                },
+                success: function(response) {
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('message').classList.remove('alert-danger', 'alert-success', 'alert-info');
+                    if (response.status === 'success') {
+                        document.getElementById('message').innerText = '谢谢你的宝贵一票！';
+                        document.getElementById('message').classList.add('alert', 'alert-success');
+                    } else {
+                        if (response.message === 'You have already voted.') {
+                            document.getElementById('message').innerText = '你已经投过票啦';
+                            document.getElementById('message').classList.add('alert', 'alert-info');
+                        } else {
+                            document.getElementById('message').innerText = '发生错误，请重试。' + response.message;
+                            document.getElementById('message').classList.add('alert', 'alert-danger');
+                        }
+                    }
+                    document.getElementById('message').style.display = 'block';
+                },
+                error: function() {
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('message').innerText = '发生错误，请重试。';
+                    document.getElementById('message').classList.add('alert', 'alert-danger');
+                    document.getElementById('message').style.display = 'block';
+                }
+            });
+        }
+    </script>
+</head>
+<body class="container text-center">
+    <h1 class="my-4">给 {{ person }} 投票</h1>
+    <div id="vote-buttons" class="row justify-content-center">
+        <div class="col-12 col-md-5 mb-3">
+            <button class="btn btn-success btn-block" onclick="sendVote('like')">
+                <i class="fas fa-thumbs-up"></i> 喜欢
+            </button>
+        </div>
+        <div class="col-12 col-md-5">
+            <button class="btn btn-danger btn-block" onclick="sendVote('dislike')">
+                <i class="fas fa-thumbs-down"></i> 不喜欢
+            </button>
+        </div>
+    </div>
+    <div id="loader">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">加载中...</span>
+        </div>
+        <p>请等待...</p>
+    </div>
+    <div id="message" class="alert" role="alert"></div>
+</body>
+</html>

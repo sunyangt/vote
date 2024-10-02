@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Read File</title>
+    <!-- Include Bootstrap CSS and JS -->
+    <!-- ... same as other templates ... -->
+</head>
+<body class="container">
+    <h1 class="my-4 text-center">Read File</h1>
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    <form method="post" action="{{ url_for('admin_read_file_result') }}" class="mx-auto" style="max-width: 400px;">
+        <div class="form-group">
+            <label for="filename">Enter File Name:</label>
+            <input type="text" class="form-control" name="filename" id="filename" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Read File</button>
+    </form>
+    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary mt-3">Back to Dashboard</a>
+</body>
+</html>

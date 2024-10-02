@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Login 投票系统登陆</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Optional: Include the jQuery library (required for Bootstrap JS plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body class="container">
+    <h1 class="my-4 text-center">Enter Access Code/输入进入投票代码</h1>
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    <form method="post" class="mx-auto" style="max-width: 300px;">
+        <div class="form-group">
+            <label for="access_code">Access Code/代码:</label>
+            <input type="text" class="form-control" name="access_code" id="access_code" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+    </form>
+</body>
+</html>
