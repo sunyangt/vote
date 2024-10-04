@@ -58,16 +58,16 @@ def login_required(f):
 def index():
     global voting_active, current_person
     if not session.get('access_code'):
-        message = '暂时不需要投票，请耐心等待投票通道开启'
-        alert_class = 'alert-info'
-        return render_template('vote.html', person=current_person, message=message, alert_class=alert_class)
+        return redirect(url_for('user_login'))
     if not voting_active or not current_person:
-        message = '你已投过票了，请等下一次投票通道开启'
+        message = '暂时不需要投票，请耐心等待投票通道开启'
         alert_class = 'alert-info'
         return render_template('vote.html', person=current_person, message=message, alert_class=alert_class)
     # Check if the user has already voted during this session
     if session.get(f'voted_{current_person}'):
-        return jsonify({'status': 'error', 'message': 'already voted'})
+        message = '你已投过票了，请等下一次投票通道开启'
+        alert_class = 'alert-info'
+        return render_template('vote.html', person=current_person, message=message, alert_class=alert_class)
     return render_template('vote.html', person=current_person)
 
 @app.route('/vote', methods=['POST'])
