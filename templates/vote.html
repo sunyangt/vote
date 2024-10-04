@@ -70,10 +70,10 @@
                             document.getElementById('message').classList.add('alert', 'alert-info');
                         } else if (response.message == 'already voted') {
                             document.getElementById('message').innerText = '你已投过票了，请等下一次投票通道开启 You have already voted.';
-                            document.getElementById('message').classList.add('alert', 'alert-danger');
+                            document.getElementById('message').classList.add('alert', 'alert-info');
                         }  else if (response.message == 'not start') {
                             document.getElementById('message').innerText = '暂时不需要投票，请耐心等待投票通道开启';
-                            document.getElementById('message').classList.add('alert', 'alert-danger');
+                            document.getElementById('message').classList.add('alert', 'alert-info');
                         }  else {
                             document.getElementById('message').innerText = '发生错误，请重试。' + response.message;
                             document.getElementById('message').classList.add('alert', 'alert-danger');
@@ -92,6 +92,12 @@
     </script>
 </head>
 <body class="container text-center">
+    {% if message %}
+        <img id="logo" src="{{ url_for('static', filename='logo.jpg') }}" alt="Logo">
+        <div id="message1" class="alert {{ alert_class }}" role="alert">
+            {{ message }}
+        </div>
+    {% else %}
     <h1 class="my-4">给 {{ person }} 投票</h1>
     <div id="vote-buttons" class="row justify-content-center">
         <div class="col-12 col-md-5 mb-3">
