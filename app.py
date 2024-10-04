@@ -34,7 +34,7 @@ def load_access_codes():
 def generate_access_codes():
     global access_codes
     codes = set()
-    while len(codes) < 150:
+    while len(codes) < 220:
         code = str(random.randint(10000, 99999))
         codes.add(code)
 
@@ -60,10 +60,10 @@ def index():
     if not session.get('access_code'):
         return redirect(url_for('user_login'))
     if not voting_active or not current_person:
-        return "暂时不需要投票，请耐心等待投票通道开启"
+        return jsonify({'status': 'error', 'message': 'not start'})
     # Check if the user has already voted during this session
     if session.get(f'voted_{current_person}'):
-        return '你已投过票了，请等下一次投票通道开启 You have already voted.'
+        return jsonify({'status': 'error', 'message': 'already voted'})
     return render_template('vote.html', person=current_person)
 
 @app.route('/vote', methods=['POST'])

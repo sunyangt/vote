@@ -40,6 +40,11 @@
             width: 3rem;
             height: 3rem;
         }
+        #logo {
+            width: 60%;
+            margin: 20px auto; /* 使 Logo 居中 */
+            display: block;
+        }
     </style>
     <script>
         function sendVote(voteType) {
@@ -63,7 +68,13 @@
                         if (response.message === 'You have already voted.') {
                             document.getElementById('message').innerText = '你已经投过票啦';
                             document.getElementById('message').classList.add('alert', 'alert-info');
-                        } else {
+                        } else if (response.message == 'already voted') {
+                            document.getElementById('message').innerText = '你已投过票了，请等下一次投票通道开启 You have already voted.';
+                            document.getElementById('message').classList.add('alert', 'alert-danger');
+                        }  else if (response.message == 'not start') {
+                            document.getElementById('message').innerText = '暂时不需要投票，请耐心等待投票通道开启';
+                            document.getElementById('message').classList.add('alert', 'alert-danger');
+                        }  else {
                             document.getElementById('message').innerText = '发生错误，请重试。' + response.message;
                             document.getElementById('message').classList.add('alert', 'alert-danger');
                         }
