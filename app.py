@@ -185,6 +185,7 @@ def save_vote_data():
         json.dump(all_votes, f)
 
 @app.route('/results')
+@login_required
 def results():
     try:
         with open('vote.json', 'r') as f:
